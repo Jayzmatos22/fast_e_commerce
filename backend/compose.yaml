@@ -1,0 +1,15 @@
+services:
+  backend:
+    build: ./backend
+    environment:
+      - DB_HOST=study-postgres
+      - DB_PORT=5432
+      - DB_NAME=e_commerce_db
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    networks:
+      - jpaspring_default
+
+networks:
+  jpaspring_default:
+    external: true
