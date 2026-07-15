@@ -84,7 +84,7 @@ public class Product {
     private String thumbnailUrl;
 
     @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProdutoImagem> imagens;
+    private List<ProductImage> imagens;
 
     @Column(name = "data_cadastro")
     private LocalDateTime dataCadastro = LocalDateTime.now();
