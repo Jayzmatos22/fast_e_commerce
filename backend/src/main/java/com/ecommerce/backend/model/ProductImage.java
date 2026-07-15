@@ -8,6 +8,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Table(name = "product_image")
 public class ProductImage {
 
     @Id
