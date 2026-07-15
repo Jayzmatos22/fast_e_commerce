@@ -25,7 +25,7 @@ public class WebConfig {
         ));
 
         HttpClient httpClient = HttpClient.newBuilder()
-                .connectTimeout(Duration.ofSeconds(5))
+                .connectTimeout(Duration.ofSeconds(10))
                 .version(HttpClient.Version.HTTP_1_1)
                 .build();
 
@@ -38,7 +38,6 @@ public class WebConfig {
                 .defaultHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
                 .defaultHeader("Accept", "application/json, text/plain, */*")
                 .defaultHeader("Accept-Language", "pt-BR,pt;q=0.9")
-                .defaultHeader("Referer", "https://www.bcb.gov.br/")
                 .build();
     }
 }
