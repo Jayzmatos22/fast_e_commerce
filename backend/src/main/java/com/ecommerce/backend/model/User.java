@@ -2,6 +2,7 @@ package com.ecommerce.backend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -9,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.nio.file.FileStore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -16,6 +18,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Getter
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "users")
 public class User implements UserDetails {
@@ -65,7 +68,7 @@ public class User implements UserDetails {
 
     @Override
     public String getPassword() {
-        return "";
+        return password;
     }
 
     @Override
@@ -92,4 +95,5 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
