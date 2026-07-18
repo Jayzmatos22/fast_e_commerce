@@ -4,7 +4,7 @@ import com.ecommerce.backend.config.security.JwtService;
 import com.ecommerce.backend.dtos.AuthResponse;
 import com.ecommerce.backend.dtos.LoginRequest;
 import com.ecommerce.backend.dtos.RegisterRequest;
-import com.ecommerce.backend.exceptions.domain.EmailAlreadyExistsException;
+import com.ecommerce.backend.exceptions.domain.user.EmailAlreadyExistsException;
 import com.ecommerce.backend.model.Role;
 import com.ecommerce.backend.model.User;
 import com.ecommerce.backend.repository.UserRepository;
@@ -25,21 +25,28 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.email())) {
-            throw new EmailAlreadyExistsException(request.email());
+
+        try {
+            if (userRepository.existsByEmail(request.email())) {
+                throw new EmailAlreadyExistsException("Email já cadastrado: " + request.email());
+            }
+
+            User user = User.builder()
+                    .name(request.name())
+                    .email(request.email())
+                    .password(passwordEncoder.encode(request.password()))
+                    .role(Role.CUSTOMER)
+                    .build();
+
+            userRepository.save(user);
+
+            String token = jwtService.generateToken(user);
+            return new AuthResponse(token, user.getEmail(), user.getRole().name());
+        } catch (Exception e) {
+            throw e;
+        } catch (EmailAlreadyExistsException e) {
+            throw new EmailAlreadyExistsException("Este email já existe", 404);
         }
-
-        User user = User.builder()
-                .name(request.name())
-                .email(request.email())
-                .password(passwordEncoder.encode(request.password()))
-                .role(Role.CUSTOMER)
-                .build();
-
-        userRepository.save(user);
-
-        String token = jwtService.generateToken(user);
-        return new AuthResponse(token, user.getEmail(), user.getRole().name());
     }
 
     public AuthResponse login(LoginRequest request) {
