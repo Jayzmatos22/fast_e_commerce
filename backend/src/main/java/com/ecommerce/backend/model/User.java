@@ -2,8 +2,10 @@ package com.ecommerce.backend.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -11,54 +13,48 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.nio.file.FileStore;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
+
+@EntityListeners(AuditingEntityListener.class)
 @Entity
 @Getter
-@EntityListeners(AuditingEntityListener.class)
-@Table(name = "users")
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "users")
+
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "u_id", nullable = false)
+    @Column(name = "u_id", updatable = false, nullable = false)
     private UUID id;
 
-    @NotBlank
-    @Email
-    @Column(name = "email_user", nullable = false, unique = true)
-    private String email;
-
-    @NotBlank
     @Column(name = "user_name", nullable = false)
     private String name;
 
-    @NotNull
-    @Column(name = "birth_date", nullable = false)
+    @Column(name = "email_user", nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "password", nullable = false, length = 100)
+    private String password;
+
+    @Column(name = "birth_date")
     private LocalDate birthDate;
 
-    @CreatedDate
+    @Column(name = "phone_user", length = 20)
+    private String phoneUser;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    @LastModifiedDate
     @Column(name = "update_at")
-    private LocalDateTime updateAt;
-
-    @Pattern(regexp = "^\\+?[0-9\\s()-]{8,20}$")
-    @Column(name = "phone_user", length = 20)
-    private String phone;
-
-    @NotBlank
-    @Size(max = 50)
-    @Column(name = "password", nullable = false, length = 50)
-    private String password;
+    private LocalDateTime updatedAt;
 
     @Enumerated(EnumType.STRING)
     private Role role;
