@@ -1,0 +1,25 @@
+name: CI Spring Boot API
+
+# Run
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    [ "main", "master" ]
+jobs:
+  build:
+    runs-on: ubuntu-latest ## máquina linux
+
+    steps:
+      - name: Baixar o código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar o Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21' # Se usar o Java 21, mude aqui!
+          distribution: 'temurin'
+          cache: 'maven' # Salva as dependências em cache para rodar mais rápido da próxima vez
+
+      - name: Compilar o projeto (test = false)
+        run: mvn clean package -DskipTests
