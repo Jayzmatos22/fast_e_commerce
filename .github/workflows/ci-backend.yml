@@ -5,10 +5,11 @@ on:
   push:
     branches: [ "main", "master" ]
   pull_request:
-    [ "main", "master" ]
+    branches: [ "main", "master" ]
+
 jobs:
   build:
-    runs-on: ubuntu-latest ## máquina linux
+    runs-on: ubuntu-latest
 
     steps:
       - name: Baixar o código do repositório
@@ -17,9 +18,10 @@ jobs:
       - name: Configurar o Java 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21' # Se usar o Java 21, mude aqui!
+          # versão 21.
+          java-version: '21'
           distribution: 'temurin'
-          cache: 'maven' # Salva as dependências em cache para rodar mais rápido da próxima vez
+          cache: 'maven'
 
-      - name: Compilar o projeto (test = false)
+      - name: Compilar o projeto
         run: mvn clean package -DskipTests
