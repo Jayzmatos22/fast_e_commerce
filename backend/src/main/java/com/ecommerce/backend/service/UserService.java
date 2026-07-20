@@ -9,10 +9,10 @@ import com.ecommerce.backend.model.UserMapper;
 import com.ecommerce.backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
+
 
 @Service
 @RequiredArgsConstructor
@@ -32,5 +32,11 @@ public class UserService {
         userMapper.updateEntityFromDto(request, currentUser);
         userRepository.save(currentUser);
         return userMapper.toResponse(currentUser);
+    }
+
+    @Transactional
+    public void deleteUser(User currentUser) {
+        userRepository.delete(currentUser);
+
     }
 }
