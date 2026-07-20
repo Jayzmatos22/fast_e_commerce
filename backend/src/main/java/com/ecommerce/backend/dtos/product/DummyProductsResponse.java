@@ -1,4 +1,4 @@
-package com.ecommerce.backend.dtos;
+package com.ecommerce.backend.dtos.product;
 
 import java.util.List;
 

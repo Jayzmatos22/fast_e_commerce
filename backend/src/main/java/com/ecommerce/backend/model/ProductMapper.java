@@ -1,6 +1,7 @@
 package com.ecommerce.backend.model;
 
-import com.ecommerce.backend.dtos.DummyProduct;
+
+import com.ecommerce.backend.dtos.product.DummyProduct;
 
 import java.util.ArrayList;
 import java.util.List;

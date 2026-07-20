@@ -1,6 +1,7 @@
 services:
   backend:
-    build: ./backend
+    ports:
+      - "8080:8080"
     environment:
       - DB_HOST=study-postgres
       - DB_PORT=5432
@@ -13,3 +14,4 @@ services:
 networks:
   jpaspring_default:
     external: true
+

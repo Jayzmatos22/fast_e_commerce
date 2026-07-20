@@ -1,9 +1,9 @@
 package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.config.security.JwtService;
-import com.ecommerce.backend.dtos.AuthResponse;
-import com.ecommerce.backend.dtos.LoginRequest;
-import com.ecommerce.backend.dtos.RegisterRequest;
+import com.ecommerce.backend.dtos.user.AuthResponse;
+import com.ecommerce.backend.dtos.user.LoginRequest;
+import com.ecommerce.backend.dtos.user.RegisterRequest;
 import com.ecommerce.backend.exceptions.domain.user.EmailAlreadyExistsException;
 import com.ecommerce.backend.model.Role;
 import com.ecommerce.backend.model.User;
@@ -25,7 +25,7 @@ public class AuthService {
     private final AuthenticationManager authenticationManager;
 
 
-    
+
     public AuthResponse register(RegisterRequest request) {
         if (userRepository.existsByEmail(request.email())) {
             throw new EmailAlreadyExistsException("Email já cadastrado: " + request.email());
